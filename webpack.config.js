@@ -2,25 +2,25 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const webpack = require('webpack')
-const path = require('path')
+const { resolve, join } = require('path')
 
-const paths = {
-  src: path.resolve(__dirname, 'src'),
-  dist: path.resolve(__dirname, 'dist')
+const path = {
+  src: resolve(__dirname, 'src'),
+  dist: resolve(__dirname, 'dist')
 }
 
 module.exports = ({ production = false } = {}) => ({
   entry: {
-    main: path.join(paths.src, 'index.js')
+    main: join(path.src, 'index.js')
   },
   plugins: [
     new MiniCssExtractPlugin({
       filename: '[name].[hash:8].css',
       chunkFilename: '[id].[hash:8].css'
     }),
-    new CleanWebpackPlugin(paths.dist),
+    new CleanWebpackPlugin(path.dist),
     new HtmlWebpackPlugin({
-      template: path.join(paths.src, 'index.html'),
+      template: join(path.src, 'index.html'),
       minify: {
         removeComments: production,
         collapseWhitespace: production
@@ -31,15 +31,15 @@ module.exports = ({ production = false } = {}) => ({
   module: {
     rules: [{
       enforce: 'pre',
-      test: /\.js$/,
+      test: /\.jsx?$/,
       exclude: /node_modules/,
       loader: 'standard-loader'
     }, {
-      test: /\.js$/,
+      test: /\.jsx?$/,
       exclude: /node_modules/,
       loader: 'babel-loader'
     }, {
-      test: /\.scss$/,
+      test: /\.(c|sc|sa)ss$/,
       use: [
         production ? MiniCssExtractPlugin.loader : 'style-loader',
         'css-loader',
@@ -50,11 +50,11 @@ module.exports = ({ production = false } = {}) => ({
   mode: production ? 'production' : 'development',
   devtool: production ? false : 'inline-source-map',
   devServer: {
-    contentBase: paths.dist
+    contentBase: path.dist
   },
   output: {
     filename: production ? '[name].[hash:8].bundle.js' : '[name].bundle.js',
-    path: paths.dist,
+    path: path.dist,
     publicPath: '/'
   }
 })
