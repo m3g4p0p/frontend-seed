@@ -1,18 +1,30 @@
-const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const webpack = require('webpack')
+const path = require('path')
 
-module.exports = ({ production } = {}) => ({
+const paths = {
+  src: path.resolve(__dirname, 'src'),
+  dist: path.resolve(__dirname, 'dist')
+}
+
+module.exports = ({ production = false } = {}) => ({
   entry: {
-    app: './src/index.js'
+    main: path.join(paths.src, 'index.js')
   },
   plugins: [
-    new MiniCssExtractPlugin(),
-    new CleanWebpackPlugin(['dist']),
+    new MiniCssExtractPlugin({
+      filename: '[name].[hash:8].css',
+      chunkFilename: '[id].[hash:8].css'
+    }),
+    new CleanWebpackPlugin(paths.dist),
     new HtmlWebpackPlugin({
-      template: './src/index.html'
+      template: path.join(paths.src, 'index.html'),
+      minify: {
+        removeComments: production,
+        collapseWhitespace: production
+      }
     }),
     new webpack.HotModuleReplacementPlugin()
   ],
@@ -38,10 +50,11 @@ module.exports = ({ production } = {}) => ({
   mode: production ? 'production' : 'development',
   devtool: production ? false : 'inline-source-map',
   devServer: {
-    contentBase: './dist'
+    contentBase: paths.dist
   },
   output: {
-    filename: '[name].bundle.js',
-    path: path.resolve(__dirname, 'dist')
+    filename: production ? '[name].[hash:8].bundle.js' : '[name].bundle.js',
+    path: paths.dist,
+    publicPath: '/'
   }
 })

@@ -1,7 +1,9 @@
 {
   "scripts": {
-    "build": "yarn karma start --single-run && yarn webpack --env.production",
-    "watch": "concurrently 'yarn karma start' 'yarn webpack-dev-server --open'"
+    "test": "karma start",
+    "build": "yarn test --single-run && yarn webpack --env.production",
+    "watch": "concurrently 'yarn test' 'yarn webpack --watch'",
+    "start": "concurrently 'yarn test' 'yarn webpack-dev-server --open'"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
