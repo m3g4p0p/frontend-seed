@@ -2,7 +2,6 @@
   "scripts": {
     "test": "karma start",
     "build": "yarn test --single-run && yarn webpack --env.production",
-    "watch": "concurrently 'yarn test' 'yarn webpack --watch'",
     "start": "concurrently 'yarn test' 'yarn webpack-dev-server --open'"
   },
   "devDependencies": {
