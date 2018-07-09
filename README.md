@@ -6,9 +6,11 @@
   - dev-server
   - SASS
 - babel
-  - env
-  - transform-object-rest-spread
-  - transform-class-properties
+  - presets:
+    - env
+  - plugins:
+    - proposal-object-rest-spread
+    - proposal-class-properties
 - karma
   - jasmine
   - PhantomJS
