@@ -1,4 +1,3 @@
-/* eslint-env jasmine */
 import app from '../src/app'
 
 describe('app', () => {
