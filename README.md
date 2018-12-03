@@ -5,7 +5,7 @@
 ## What's included
 
 - webpack
-  - dev-server / HMO
+  - dev-server / HMR
   - SASS
 - babel
   - presets:
