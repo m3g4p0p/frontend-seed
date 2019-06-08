@@ -1,5 +1,5 @@
 // Karma configuration
-// Generated on Thu Jul 05 2018 11:59:33 GMT+0200 (Central European Summer Time)
+// Generated on Sat Jun 08 2019 19:58:40 GMT+0200 (Central European Summer Time)
 
 module.exports = function (config) {
   config.set({
@@ -13,19 +13,20 @@ module.exports = function (config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'spec/**/*.spec.js'
+      'specs/**/*.js'
     ],
 
     // list of files / patterns to exclude
-    exclude: [],
+    exclude: [
+    ],
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      'spec/**/*.spec.js': ['webpack']
+      'specs/**/*.spec.js': ['webpack']
     },
 
-    webpack: require('./webpack-karma.config'),
+    webpack: require('./webpack-karma.config.js'),
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
@@ -48,10 +49,6 @@ module.exports = function (config) {
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
     browsers: ['PhantomJS'],
-
-    phantomjsLauncher: {
-      exitOnResourceError: true
-    },
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits

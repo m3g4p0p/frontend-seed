@@ -1,5 +1,5 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const CleanWebpackPlugin = require('clean-webpack-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const webpack = require('webpack')
 const { resolve, join } = require('path')
@@ -18,7 +18,7 @@ module.exports = ({ production = false } = {}) => ({
       filename: '[name].[hash:8].css',
       chunkFilename: '[id].[hash:8].css'
     }),
-    new CleanWebpackPlugin(path.dist),
+    new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       template: join(path.src, 'index.html'),
       minify: {
@@ -45,6 +45,12 @@ module.exports = ({ production = false } = {}) => ({
         'css-loader',
         'sass-loader'
       ]
+    }, {
+      test: /\.(png|jpe?g|gif|svg|ttf|eot|woff2?)$/,
+      loader: 'url-loader',
+      options: {
+        fallback: 'file-loader'
+      }
     }]
   },
   mode: production ? 'production' : 'development',
